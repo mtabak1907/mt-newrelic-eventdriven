@@ -30,3 +30,19 @@ terraform.rc
 
 # Ignore CLI configuration files
 .terraform.lock.hcl
+
+# Ignore Terraform backups
+main.tf_*
+main_*
+*_bkp
+*_backup
+lambda.py
+lambda.zip
+lambda.py.bak
+lambda.py.bak2
+notes.txt
+output.txt
+response.json
+
+main_copy.tf_backup
+# Ignore Python cache files
