@@ -71,7 +71,7 @@ module "my_lambda_function" {
   source_github_organization = "mtabak1907"
 
   # Hash for the Lambda code
-  source_code_hash = "lhiaH8Z6epeYSiXQ4s49yRhMkYz5qN19mOtwjuzdZDg="
+  source_code_hash = "vDQcZJk/oRJcS8BgpPsil/4avzX43wYfiYcHiysNHl0="
 
   # Networking (VPC not used here)
   subnet_ids         = []
