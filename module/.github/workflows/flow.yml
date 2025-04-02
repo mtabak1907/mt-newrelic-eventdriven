@@ -1,0 +1,9 @@
+name: Terraform Modules
+
+on: 
+    push:
+        branches:
+            - '*'
+jobs:
+    terraform-module:
+        uses: IntelexTechnologies/terraform-registry-support/.github/workflows/terraform-modules.yml@main

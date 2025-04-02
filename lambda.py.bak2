@@ -1,0 +1,39 @@
+import boto3
+import json
+
+def lambda_handler(event, context):
+    # ✅ Extract instance ID from New Relic API request
+    try:
+        body = json.loads(event.get("body", "{}"))  # Get request body safely
+        instance_id = body.get("instance_id", None)  # Extract instance_id from the request
+
+        if not instance_id:
+            return {
+                'statusCode': 400,
+                'body': json.dumps("Error: No instance_id provided in the request.")
+            }
+
+    except Exception as e:
+        return {
+            'statusCode': 400,
+            'body': json.dumps(f"Error parsing request: {str(e)}")
+        }
+
+    # ✅ Use Lambda's default IAM role to interact with SSM
+    ssm_client = boto3.client("ssm")
+
+    try:
+        response = ssm_client.send_command(
+            InstanceIds=[instance_id],  # ✅ Restart only the requested instance
+            DocumentName="AWS-RunPowerShellScript",
+            Parameters={"commands": ["powershell.exe -File C:\\mt\\restart.ps1"]}
+        )
+        return {
+            'statusCode': 200,
+            'body': json.dumps(f'Successfully sent restart command to {instance_id}')
+        }
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f'Error: {str(e)}')
+        }
